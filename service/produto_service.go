@@ -9,6 +9,7 @@ type ProdutoServiceInterface interface {
 	GetProduto(ID *int64) *entity.Produto
 	GetAll() *entity.ListaDeProduto
 	Create(produto *entity.Produto) int64
+	Update(ID *int64, produto *entity.Produto) int64
 }
 
 type produto_service struct {
