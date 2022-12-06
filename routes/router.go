@@ -24,6 +24,9 @@ func ConfigRoutes(router *gin.Engine, service service.ProdutoServiceInterface) *
 			produtos.PUT("/:id", func(c *gin.Context) {
 				controllers.Update(c, service)
 			})
+			produtos.DELETE("/:id", func(c *gin.Context) {
+				controllers.Delete(c, service)
+			})
 		}
 	}
 
