@@ -15,7 +15,7 @@ func ConfigRoutes(router *gin.Engine, service service.ProdutoServiceInterface) *
 			produtos.GET("/product/:id", func(c *gin.Context) {
 				controllers.GetProduto(c, service)
 			})
-			produtos.GET("/products/", func(c *gin.Context) {
+			produtos.GET("/products", func(c *gin.Context) {
 				controllers.GetAll(c, service)
 			})
 			produtos.POST("/product/", func(c *gin.Context) {

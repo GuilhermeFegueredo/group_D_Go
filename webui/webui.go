@@ -1,44 +1,57 @@
 package webui
 
 import (
-	"embed"
-	"io/fs"
+	"api-produto/entity"
+	"encoding/json"
 	"net/http"
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
-var server embed.FS
-
-type embedFileSystem struct {
-	http.FileSystem
-}
-
-func (e embedFileSystem) Exists(prefix string, path string) bool {
-	_, err := e.Open(path)
-	if err != nil {
-		return false
-	}
-	return true
-}
-
-func EmbedFolder(fsEmbed embed.FS, targetPath string) static.ServeFileSystem {
-	fsys, err := fs.Sub(fsEmbed, targetPath)
-	if err != nil {
-		panic(err)
-	}
-	return embedFileSystem{
-		FileSystem: http.FS(fsys),
-	}
-}
+// Funciona o front, mas não traz joga as informações no front
 
 func RegisterUIHandlers(router *gin.Engine) {
 
 	router.LoadHTMLGlob("./webui/dist/spa/*.html")
-	router.Use(static.Serve("/webui", EmbedFolder(server, "webui")))
 
-	router.GET("/webui/", func(c *gin.Context) {
+	router.Use(static.Serve("/webui", static.LocalFile("./webui/dist/spa", true)))
+	router.Use(static.Serve("/webui/assets", static.LocalFile("./webui/dist/spa/assets", true)))
+	router.Use(static.Serve("/webui/icons", static.LocalFile("./webui/dist/spa/icons", true)))
+
+	router.GET("/webui", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
+	})
+}
+
+func AuthLogin() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		user := entity.User{}
+
+		err := json.NewDecoder(r.Body).Decode(&user)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"MSG": "Error to parse User from JSON", "codigo": 500}`))
+			return
+		}
+
+		admin := entity.NovoAdmin()
+		token := entity.Token{
+			Token: entity.USER_TOKEN,
+		}
+
+		if user.Username == admin.Username && user.Senha == admin.Senha {
+			err = json.NewEncoder(w).Encode(token)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(`{"MSG": "Error to parse Product to JSON", "codigo": 500}`))
+				return
+			}
+		} else {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte(`{"MSG": "Error to login, check username and password", "codigo": 401}`))
+		}
+
 	})
 }
