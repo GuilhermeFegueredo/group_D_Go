@@ -1,6 +1,6 @@
 {
     "srv_port": "8081",
-    "web_ui": false,
+    "web_ui": true,
     "open_browser": false,
     "mode": "production",
     "dbconfig": {

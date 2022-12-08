@@ -15,7 +15,7 @@ func (ps *produto_service) Update(ID *int64, produto *entity.Produto) int64 {
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(produto.Nome, produto.Codigo, produto.Preco, ID)
+	result, err := stmt.Exec(produto.Name, produto.Code, produto.Price, ID)
 	if err != nil {
 		log.Println(err.Error())
 	}

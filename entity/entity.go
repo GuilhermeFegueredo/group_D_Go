@@ -11,9 +11,9 @@ type ProdutoInterface interface {
 
 type Produto struct {
 	ID          int     `json:"id"`
-	Nome        string  `json:"nome"`
-	Codigo      string  `json:"codigo"`
-	Preco       float64 `json:"preco"`
+	Name        string  `json:"name"`
+	Code        string  `json:"code"`
+	Price       float64 `json:"price"`
 	CriadoEm    string  `json:"criado_em,omitempty"`
 	AtulizadoEm string  `json:"atulizado_em,omitempty"`
 }
@@ -27,11 +27,11 @@ func (p Produto) toString() string {
 	return string(data)
 }
 
-func NovoProduto(nome, codigo string, preco float64) *Produto {
+func NovoProduto(nome, code string, price float64) *Produto {
 	return &Produto{
-		Nome:   nome,
-		Codigo: codigo,
-		Preco:  preco,
+		Name:  nome,
+		Code:  code,
+		Price: price,
 	}
 }
 
@@ -56,6 +56,12 @@ type User struct {
 func NovoAdmin() *User {
 	return &User{
 		Username: "admin",
-		Senha:    "megasenha",
+		Senha:    "supersenha",
 	}
 }
+
+type Token struct {
+	Token string `json:"token"`
+}
+
+const USER_TOKEN = "fake-WzD5fqrlaAXLv26bpI0hxvAhDp7T1Bac"

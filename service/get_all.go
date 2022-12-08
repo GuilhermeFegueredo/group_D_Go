@@ -20,7 +20,7 @@ func (ps *produto_service) GetAll() *entity.ListaDeProduto {
 	for rows.Next() {
 		produto := entity.Produto{}
 
-		if err := rows.Scan(&produto.ID, &produto.Nome, &produto.Codigo, &produto.Preco); err != nil {
+		if err := rows.Scan(&produto.ID, &produto.Name, &produto.Code, &produto.Price); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			lista_produtos.List = append(lista_produtos.List, &produto)

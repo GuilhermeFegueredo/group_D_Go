@@ -17,7 +17,7 @@ func (ps *produto_service) GetProduto(ID *int64) *entity.Produto {
 
 	produto := entity.Produto{}
 
-	err = stmt.QueryRow(ID).Scan(&produto.ID, &produto.Nome, &produto.Codigo, &produto.Preco)
+	err = stmt.QueryRow(ID).Scan(&produto.ID, &produto.Name, &produto.Code, &produto.Price)
 	if err != nil {
 		log.Println("error: cannot find produto", err.Error())
 	}

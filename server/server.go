@@ -2,7 +2,6 @@ package server
 
 import (
 	"api-produto/config"
-	"api-produto/routes"
 	"api-produto/service"
 	"log"
 
@@ -21,9 +20,8 @@ func NewServer(conf *config.Config) Server {
 	}
 }
 
-func (s *Server) Run(service service.ProdutoServiceInterface) {
-	router := routes.ConfigRoutes(s.SERVER, service)
+func Run(router *gin.Engine, server Server, service service.ProdutoServiceInterface) {
 
-	log.Print("Server is running at port: ", s.SRV_PORT)
-	log.Fatal(router.Run(":" + s.SRV_PORT))
+	log.Print("Server is running at port: ", server.SRV_PORT)
+	log.Fatal(router.Run(":" + server.SRV_PORT))
 }

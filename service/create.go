@@ -15,7 +15,7 @@ func (ps *produto_service) Create(produto *entity.Produto) int64 {
 
 	defer stmt.Close()
 
-	result, err := stmt.Exec(produto.Nome, produto.Codigo, produto.Preco)
+	result, err := stmt.Exec(produto.Name, produto.Code, produto.Price)
 	if err != nil {
 		log.Println(err.Error())
 	}

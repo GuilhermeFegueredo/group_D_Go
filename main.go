@@ -3,8 +3,10 @@ package main
 import (
 	"api-produto/config"
 	"api-produto/database"
+	"api-produto/routes"
 	"api-produto/server"
 	"api-produto/service"
+	"api-produto/webui"
 	"encoding/json"
 	"log"
 	"os"
@@ -20,13 +22,23 @@ func main() {
 	}
 
 	conf := config.NewConfig(default_conf)
+
 	dbpool := database.NewDB(conf)
 	if dbpool != nil {
-		log.Print("Se conectou ", dbpool.GetDB())
+		log.Print("Você iniciou a conexão com o DB: ", dbpool.GetDB())
 	}
 
 	service := service.NewProdutoService(dbpool)
+	serv := server.NewServer(conf)
 
-	server := server.NewServer(conf)
-	server.Run(service)
+	// Inicia as rotas
+	router := routes.ConfigRoutes(serv.SERVER, service)
+
+	if conf.WEB_UI {
+		webui.RegisterUIHandlers(router)
+	}
+
+	// Registra as rotas
+	server.Run(router, serv, service)
+
 }
