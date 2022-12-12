@@ -8,12 +8,15 @@ import (
 
 func GetAll(c *gin.Context, service service.ProdutoServiceInterface) {
 
-	lista := service.GetAll()
-	if len(lista.List) == 0 {
-		c.JSON(404, gin.H{
-			"error": "lista not found, 404",
-		})
-		return
+	if isAuth(c) {
+		lista := service.GetAll()
+		if len(lista.List) == 0 {
+			c.JSON(404, gin.H{
+				"error": "lista not found, 404",
+			})
+			return
+		}
+		c.JSON(200, lista)
 	}
-	c.JSON(200, lista)
+
 }

@@ -27,16 +27,16 @@ func (p Produto) toString() string {
 	return string(data)
 }
 
-func NovoProduto(nome, code string, price float64) *Produto {
+func NovoProduto(name, code string, price float64) *Produto {
 	return &Produto{
-		Name:  nome,
+		Name:  name,
 		Code:  code,
 		Price: price,
 	}
 }
 
 type ListaDeProduto struct {
-	List []*Produto `json:"lista"`
+	List []*Produto `json:"list"`
 }
 
 func (prodLista ListaDeProduto) toString() string {
@@ -50,14 +50,7 @@ func (prodLista ListaDeProduto) toString() string {
 
 type User struct {
 	Username string `json:"username"`
-	Senha    string `json:"senha"`
-}
-
-func NovoAdmin() *User {
-	return &User{
-		Username: "admin",
-		Senha:    "supersenha",
-	}
+	Senha    string `json:"password"`
 }
 
 type Token struct {

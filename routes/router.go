@@ -8,6 +8,7 @@ import (
 )
 
 func ConfigRoutes(router *gin.Engine, service service.ProdutoServiceInterface) *gin.Engine {
+
 	main := router.Group("api")
 	{
 		produtos := main.Group("/v1")
@@ -28,7 +29,7 @@ func ConfigRoutes(router *gin.Engine, service service.ProdutoServiceInterface) *
 				controllers.Delete(c, service)
 			})
 			produtos.POST("/user/login", func(c *gin.Context) {
-				c.Next()
+				controllers.Login(c, service)
 			})
 		}
 	}

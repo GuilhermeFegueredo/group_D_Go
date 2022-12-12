@@ -11,6 +11,7 @@ type ProdutoServiceInterface interface {
 	Create(produto *entity.Produto) int64
 	Update(ID *int64, produto *entity.Produto) int64
 	Delete(id *int64) int64
+	GetUser(login *string) *entity.User
 }
 
 type produto_service struct {

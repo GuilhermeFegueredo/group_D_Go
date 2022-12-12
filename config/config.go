@@ -5,19 +5,14 @@ import (
 	"strconv"
 )
 
-const (
-	DEVELOPER    = "developer"
-	HOMOLOGATION = "homologation"
-	PRODUCTION   = "production"
-)
+const DEVELOPER = "developer"
 
 // arquivo de config
 type Config struct {
-	SRV_PORT    string `json:"srv_port"`
-	WEB_UI      bool   `json:"web_ui"`
-	Mode        string `json:"mode"`
-	OpenBrowser bool   `json:"open_browser"`
-	DBConfig    `json:"dbconfig"`
+	SRV_PORT string `json:"srv_port"`
+	WEB_UI   bool   `json:"web_ui"`
+	Mode     string `json:"mode"`
+	DBConfig `json:"dbconfig"`
 }
 
 type DBConfig struct {
@@ -90,9 +85,8 @@ func NewConfig(config *Config) *Config {
 
 func DefaultConfig() *Config {
 	default_config := Config{
-		SRV_PORT:    "9000",
-		WEB_UI:      true,
-		OpenBrowser: true,
+		SRV_PORT: "9000",
+		WEB_UI:   true,
 		DBConfig: DBConfig{
 			DB_DRIVE: "mysql",
 			DB_HOST:  "localhost",
@@ -101,7 +95,7 @@ func DefaultConfig() *Config {
 			DB_PASS:  "",
 			DB_NAME:  "group_d",
 		},
-		Mode: PRODUCTION,
+		Mode: DEVELOPER,
 	}
 
 	return &default_config

@@ -23,5 +23,6 @@ func NewServer(conf *config.Config) Server {
 func Run(router *gin.Engine, server Server, service service.ProdutoServiceInterface) {
 
 	log.Print("Server is running at port: ", server.SRV_PORT)
+	log.Printf("http://localhost:%v/webui \n", server.SRV_PORT)
 	log.Fatal(router.Run(":" + server.SRV_PORT))
 }
